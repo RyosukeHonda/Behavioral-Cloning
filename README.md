@@ -23,6 +23,16 @@ Thus I used [NVIDIA model](https://arxiv.org/abs/1604.07316) architecture which 
 
 The structure of the model is as follows.
 The structure consists of 5 layers of CNN(Convolutinal layers) and 3 fully connected layers.
+- 1st layer of CNN: 24 fliters, 5x5 kernel, 2x2 stride
+- 2nd layer of CNN: 35 filters, 5x5 kernel, 2x2 stride
+- 3rd layer of CNN: 48 filters, 5x5 kernel, 2x2 stride
+- 4th layer of CNN: 64 filters, 3x3 kernel, non-stride
+- 5th layer of CNN: 64 filters, 3x3 kernel, non-stride
+- Flatten
+- 1st fully connected layer: 100 neurons
+- 2nd fully connected layer: 50 neurons
+- 3rd fully connected layer: 10 neurons
+- Output:(Steering angle)
 
 
 ![NVIDIA model](images/cnn-architecture-624x890.png)
