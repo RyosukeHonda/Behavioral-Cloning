@@ -25,4 +25,6 @@ The structure consists of 5 layers of CNN(Convolutinal layers) and 3 fully conne
 
 
 ![NVIDIA model](cnn-architecture-624x890.png)
+
+
 Image quoted from [here](https://devblogs.nvidia.com/parallelforall/deep-learning-self-driving-cars/)
