@@ -44,13 +44,13 @@ Image quoted from [here](https://devblogs.nvidia.com/parallelforall/deep-learnin
 ## Training
 There are 8036 pieces of images in the dataset, however many of those are have small amount of steering angles. Because of the unbalanced data, the clone driver will get poor performance. Therefore, I cut off 75% of the data where the absolute value ofsteering angle is below 0.10. Then I got 3675 of images. I set 80% of them to the training set(2940 images) and the lest is for the validation(735 images) set.
 
-I trained the model with Keras fit_generator. Parameters for training are below.
+I trained the model with [Keras](https://keras.io/) fit_generator. Parameters for training are below.
 - Batch size:32
 - Number of epochs:2
 - Samples per epoch:28000
 - Number of validation samples:2800
 
-## Strategies
+## Strategies(Data Augmentation)
 Since the number of the training data set is limited, I also used left and right side of images as mentioned above.
 I generated images so that the number of images increases. Techniques are below.
 
