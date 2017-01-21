@@ -65,3 +65,6 @@ Since the training set only one right corner in the course(truck 1), the car wil
 
 ## Reflection
 This was one of the most challenging projects I've ever did concerning deep learning.Typically in deep learning, high number of epochs will tend to get low validation loss (potential falling into overfitting though). This was true to this project and I got low validation loss after long time of training. However, low validation loss doesn't always good in this project. I tried the lowest validation loss model,but the car easily drove off the truck. On the other hand, shallow epochs(such as 2 or 3 in this project) resulted in the best result. I got better result when generating images by adding brightness and flip images.
+
+## Future Work
+The model I made for this project doesn't work well in another course, so I'll work on further data augmentation(especially brightness).
