@@ -21,4 +21,4 @@ I also added the random brightness to the image so that the clone driver will ge
 I used [NVIDIA model](https://arxiv.org/abs/1604.07316) architecture for training. The image size output from the simulator is 320x160x3(RGB), but the NVIDIA model uses the image size of 200x66x3(YUV). I cropped the 40 pixels from the top to prevent from learning sky infomation and cropped 25 pixels from the bottom to erase the information of the body. I got the image size of 320x95x3(RGB) and reshaped it to the 200x66x3(RGB). Then I normalized the image(divided by 127.5 and subtract 0.5 fot each image) and changed the color space into YUV.
 
 The structure of the model is as follows.
-[NVIDIA model](cnn-architecture-624x890.png)
+![NVIDIA model](cnn-architecture-624x890.png)
