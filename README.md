@@ -18,7 +18,8 @@ I used the deep learning based algorithm to clone human driving behavior. The tr
 I also added the random brightness to the image so that the clone driver will get robustness.
 
 ## Model Structure
-I used [NVIDIA model](https://arxiv.org/abs/1604.07316) architecture for training. The image size output from the simulator is 320x160x3(RGB), but the NVIDIA model uses the image size of 200x66x3(YUV). I cropped the 40 pixels from the top to prevent from learning sky infomation and cropped 25 pixels from the bottom to erase the information of the body. I got the image size of 320x95x3(RGB) and reshaped it to the 200x66x3(RGB). Then I normalized the image(divided by 127.5 and subtract 0.5 fot each image) and changed the color space into YUV.
+I tried multiple architectures such as VGG and many other my models, but doesn't work well(The driver didn't run on the right truck).
+Thus I used [NVIDIA model](https://arxiv.org/abs/1604.07316) architecture which is almost the same setting for this project. The image size output from the simulator is 320x160x3(RGB), but the NVIDIA model uses the image size of 200x66x3(YUV). I cropped the 40 pixels from the top to prevent from learning sky infomation and cropped 25 pixels from the bottom to erase the information of the body. I got the image size of 320x95x3(RGB) and reshaped it to the 200x66x3(RGB). Then I normalized the image(divided by 127.5 and subtract 0.5 fot each image) and changed the color space into YUV.
 
 The structure of the model is as follows.
 The structure consists of 5 layers of CNN(Convolutinal layers) and 3 fully connected layers.
@@ -31,8 +32,21 @@ Image quoted from [here](https://devblogs.nvidia.com/parallelforall/deep-learnin
 
 
 ## Training
+There are 8036 pieces of images in the dataset, however many of those are have small amount of steering angles. Because of the unbalanced data, the clone driver will get poor performance. Therefore, I cut off 75% of the data where the absolute value ofsteering angle is below 0.10. Then I got 3675 of images. I set 80% of them to the training set(2940 images) and the lest is for the validation(735 images) set.
+
 I trained the model with Keras fit_generator. Parameters for training are below.
 - Batch size:32
 - Number of epochs:2
 - Samples per epoch:28000
 - Number of validation samples:2800
+
+## Strategies
+Since the number of the training data set is limited, I also used left and right side of images as mentioned above.
+I generated images so that the number of images increases. Techniques are below.
+
+### Add Random Brightness
+The training set only has the bright color road, however the unseen dataset may have dark color condition(truck 2).Therefore, adding random brightness will result in getting more robustness in the clone driver.
+
+
+### Flip image
+Since the training set only one right corner in the course(truck 1), the car will tend to learn only left turn. Therefore I flipped 50% of the image and changed the steering angle accordingly.
