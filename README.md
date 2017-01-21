@@ -22,5 +22,7 @@ I used [NVIDIA model](https://arxiv.org/abs/1604.07316) architecture for trainin
 
 The structure of the model is as follows.
 The structure consists of 5 layers of CNN(Convolutinal layers) and 3 fully connected layers.
+
+
 ![NVIDIA model](cnn-architecture-624x890.png)
 Image quoted from [here](https://devblogs.nvidia.com/parallelforall/deep-learning-self-driving-cars/)
