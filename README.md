@@ -26,6 +26,11 @@ Fig.1: Images of the car(from left, center and right view)
 I tried multiple architectures such as VGG and many other my models, but doesn't work well(The driver didn't run on the right truck).
 Thus I used [NVIDIA model](https://arxiv.org/abs/1604.07316) architecture which is almost the same setting for this project. The image size output from the simulator is 320x160x3(RGB), but the NVIDIA model uses the image size of 200x66x3(YUV). I cropped the 40 pixels from the top to prevent from learning sky infomation and cropped 25 pixels from the bottom to erase the information of the body. I got the image size of 320x95x3(RGB) and reshaped it to the 200x66x3(RGB). Then I normalized the image(divided by 127.5 and subtract 0.5 fot each image) and changed the color space into YUV.
 
+![Cripped Image](images/cripped_img.png)
+
+
+Fig.2: The images of original, cripped and resized figure.
+
 The structure of the model is as follows.
 The structure consists of 5 layers of CNN(Convolutinal layers) and 3 fully connected layers.
 - 1st layer of CNN: 24 fliters, 5x5 kernel, 2x2 stride
@@ -43,7 +48,7 @@ The structure consists of 5 layers of CNN(Convolutinal layers) and 3 fully conne
 ![NVIDIA model](images/cnn-architecture-624x890.png)
 
 
-Fig.2: NVIDIA CNN architecture (Image quoted from [here](https://devblogs.nvidia.com/parallelforall/deep-learning-self-driving-cars/))
+Fig.3: NVIDIA CNN architecture (Image quoted from [here](https://devblogs.nvidia.com/parallelforall/deep-learning-self-driving-cars/))
 
 
 ## Training
@@ -51,14 +56,14 @@ There are 8036 pieces of images in the dataset, however many of those are have s
 
 ![Original Data Distributuon](images/original_data_dist.png)
 
+Fig.4: The Original Steering Data Distribution
 
-Fig.3: The Original Steering Data Distribution
+
 
 
 ![Cut off](images/train_and_val_data.png)
 
-
-Fig.4: Training and Validation steering angle distribution after cutting off small angles.
+Fig.5: Training and Validation steering angle distribution after cutting off small angles.
 
 
 
@@ -77,14 +82,14 @@ The training set only has the bright color road, however the unseen dataset may 
 
 ![Random Brightness](images/random_brightness.png)
 
-Fig.5: Implement Random Brightness change
+Fig.6: Implement Random Brightness change
 
 ### Flip image
 Since the training set only one right corner in the course(truck 1), the car will tend to learn only left turn. Therefore I flipped 50% of the image and changed the steering angle accordingly.
 
 ![Flip image](images/flipped_img.png)
 
-Fig.6: Flipped image and Steering angle
+Fig.7: Flipped image and Steering angle
 
 ## Reflection
 This was one of the most challenging projects I've ever did concerning deep learning.Typically in deep learning, high number of epochs will tend to get low validation loss (potential falling into overfitting though). This was true to this project and I got low validation loss after long time of training. However, low validation loss doesn't always good in this project. I tried the lowest validation loss model,but the car easily drove off the truck. On the other hand, shallow epochs(such as 2 or 3 in this project) resulted in the best result. I got better result when generating images by adding brightness and flip images.
