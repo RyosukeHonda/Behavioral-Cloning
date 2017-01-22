@@ -29,7 +29,7 @@ def roi(img): # For model 5
 
     #img = img[55:140,25:295]
     #img = img[60:140,40:280]
-    img =img[img.shape[0]/4:img.shape[0]-25,:]
+    img =img[40:img.shape[0]-25,:]
     img = cv2.resize(img, (200, 66))
     return img
 
