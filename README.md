@@ -3,10 +3,12 @@ Use Deep Learning to Clone Driving Behavior
 
 ## File Structure
 - model.py - The script used to create and train the model.
-- drive.py - The script to drive the car. You can feel free to resubmit the original drive.py or make modifications and submit your modified version.
-- model.json - The model architecture.
-- model.h5 - The model weights.
-- README.md - explains the structure of your network and training approach. While we recommend using English for good practice, writing in any language is acceptable (reviewers will translate). There is no minimum word count so long as there are complete descriptions of the problems and the strategies. See the rubric for more details about the expectations.
+- drive.py - The script to drive the car.
+- model2.json - The model architecture.
+- model2.h5 - The model weights.
+- README.md - explains the structure of your network and training approach.
+- EDA.html,EDA.ipynb - Exploratory data analysis(EDA.ipynb is not functional since this repository doesn't include the full images)
+
 
 
 ## Project Overview
