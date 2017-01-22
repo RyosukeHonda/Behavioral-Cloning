@@ -20,7 +20,6 @@ The input data is the image taken in the simulator and the output is the steerin
 
 Fig.1: Data Structure
 
-Fig.1: Images of the car(from left, center and right view)
 
 ## Approach
 I used the deep learning based algorithm to clone human driving behavior. The training data is the image of the center view and the label of the data is the steering angle. When it comes to using it in the real world, the image from the center isn't enough to learn the human behavior. However, running zigzag is not good idea to capture the road condition(and dangerous in the real world). Therefore, I used the left and right side view of the car to capture the world(in the simulator). I added +0.25 to the left side view and added -0.25 to the right side view.(The values are got from empirically.)
