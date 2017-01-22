@@ -102,7 +102,7 @@ def image_generator(driving_log):
 
 
 
-def batch_generator(driving_log,  batch_size=100, *args, **kwargs):
+def batch_generator(driving_log,  batch_size=32, *args, **kwargs):
     num_rows = len(driving_log.index)
     train_images = np.zeros((batch_size, 3, 66, 200))
     train_steering = np.zeros(batch_size)
@@ -121,12 +121,15 @@ def batch_generator(driving_log,  batch_size=100, *args, **kwargs):
 driving_log = pd.read_csv("driving_log.csv").reset_index()
 print("Number of Original Data",len(driving_log))
 
-num_drops = int(len(driving_log[np.abs(driving_log["steering"])<=0.1]))
+#Cut off 75% of low steering angle
+num_drops = int(len(driving_log[np.abs(driving_log["steering"])<=0.1])*0.75)
 drop_lows = driving_log[driving_log["steering"]==0]["index"].values[0:num_drops]
 
+#Shuffle the data
 driving_log_new = driving_log.drop(drop_lows,axis=0).sample(frac=1.0)
 print("New Data",len(driving_log_new))
 
+#Divide the data into training(80%) and validation(20%) data
 num_training=(int(len(driving_log_new)*0.8))
 
 training_data = driving_log_new[0:num_training]
@@ -134,10 +137,12 @@ training_data = driving_log_new[0:num_training]
 print("Num of Training data",len(training_data))
 validation_data = driving_log_new[num_training:]
 print("Num of Validation data",len(validation_data))
+
+#Make dataset
 train_data = batch_generator(training_data)
 val_data = batch_generator(validation_data)
 
-#Nvidia Model(add Dropout)
+#Nvidia Model
 model = Sequential()
 #model.add(Lambda(lambda x: x/255.0-0.5,input_shape=(3,66,200),name="Normalization"))
 model.add(Convolution2D(24, 5, 5, subsample=(2,2), activation='relu', name='Conv1',input_shape=(3,66,200)))
@@ -147,7 +152,7 @@ model.add(Convolution2D(64, 3, 3, activation='relu', name='Conv4'))
 model.add(Convolution2D(64, 3, 3, activation='relu', name='Conv5'))
 model.add(Flatten())
 #model.add(Dense(1164, activation='relu', name='FC1'))
-model.add(Dropout(0.4))
+#model.add(Dropout(0.4))
 model.add(Dense(100, activation='relu', name='FC1'))
 #model.add(Dropout(0.5))
 model.add(Dense(50, activation='relu', name='FC2'))
@@ -162,10 +167,10 @@ model.compile(optimizer=opt, loss='mse', metrics=[])
 
 
 model_json = model.to_json()
-model_name = 'model1'
+model_name = 'model'
 h = model.fit_generator(train_data, validation_data = val_data,
-                            samples_per_epoch = 20000,#28000
-                            nb_val_samples = 1000,
+                            samples_per_epoch = 28000,#28000
+                            nb_val_samples = 2800,
                             nb_epoch=2, verbose=1)
 
 
@@ -174,8 +179,8 @@ with open(model_name+'.json', "w") as json_file:
 
 model.save_weights(model_name+'.h5')
 
-with open('./model1.json', 'r') as json_file:
+with open('./model.json', 'r') as json_file:
     model = model_from_json(json_file.read())
 #save_model(model_json,model_name)
-model.load_weights('./model1.h5')
+model.load_weights('./model.h5')
 model.summary()
