@@ -17,6 +17,10 @@ The input data is the image taken in the simulator and the output is the steerin
 I used the deep learning based algorithm to clone human driving behavior. The training data is the image of the center view and the label of the data is the steering angle. When it comes to using it in the real world, the image from the center isn't enough to learn the human behavior. However, running zigzag is not good idea to capture the road condition(and dangerous in the real world). Therefore, I used the left and right side view of the car to capture the world(in the simulator). I added +0.25 to the left side view and added -0.25 to the right side view.(The values are got from empirically.)
 I also added the random brightness to the image so that the clone driver will get robustness.
 
+![Camera Image](images/simulator_img.png)
+
+
+
 ## Model Structure
 I tried multiple architectures such as VGG and many other my models, but doesn't work well(The driver didn't run on the right truck).
 Thus I used [NVIDIA model](https://arxiv.org/abs/1604.07316) architecture which is almost the same setting for this project. The image size output from the simulator is 320x160x3(RGB), but the NVIDIA model uses the image size of 200x66x3(YUV). I cropped the 40 pixels from the top to prevent from learning sky infomation and cropped 25 pixels from the bottom to erase the information of the body. I got the image size of 320x95x3(RGB) and reshaped it to the 200x66x3(RGB). Then I normalized the image(divided by 127.5 and subtract 0.5 fot each image) and changed the color space into YUV.
@@ -44,6 +48,10 @@ Fig.1: NVIDIA CNN architecture (Image quoted from [here](https://devblogs.nvidia
 ## Training
 There are 8036 pieces of images in the dataset, however many of those are have small amount of steering angles. Because of the unbalanced data, the clone driver will get poor performance. Therefore, I cut off 75% of the data where the absolute value ofsteering angle is below 0.10. Then I got 3675 of images. I set 80% of them to the training set(2940 images) and the lest is for the validation(735 images) set.
 
+![Original Data Distributuon](images/original_data_dist.png)
+
+![Cut off](images/train_and_val_data.png)
+
 I trained the model with [Keras](https://keras.io/) fit_generator. Parameters for training are below.
 - Batch size:32
 - Number of epochs:2
@@ -57,11 +65,12 @@ I generated images so that the number of images increases. Techniques are below.
 ### Add Random Brightness
 The training set only has the bright color road, however the unseen dataset may have dark color condition(truck 2).Therefore, adding random brightness will result in getting more robustness in the clone driver.
 
+![Random Brightness](images/random_brightness.png)
 
 ### Flip image
 Since the training set only one right corner in the course(truck 1), the car will tend to learn only left turn. Therefore I flipped 50% of the image and changed the steering angle accordingly.
 
-
+![Flip image](images/flipped_img.png)
 
 ## Reflection
 This was one of the most challenging projects I've ever did concerning deep learning.Typically in deep learning, high number of epochs will tend to get low validation loss (potential falling into overfitting though). This was true to this project and I got low validation loss after long time of training. However, low validation loss doesn't always good in this project. I tried the lowest validation loss model,but the car easily drove off the truck. On the other hand, shallow epochs(such as 2 or 3 in this project) resulted in the best result. I got better result when generating images by adding brightness and flip images.
