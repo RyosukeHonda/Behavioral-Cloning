@@ -1,3 +1,5 @@
+import os
+os.environ["KERAS_BACKEND"] = "theano"
 import argparse
 import base64
 import json
