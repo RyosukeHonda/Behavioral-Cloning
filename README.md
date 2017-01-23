@@ -47,6 +47,7 @@ The structure consists of 5 layers of CNN(Convolutinal layers) and 3 fully conne
 - 4th layer of CNN: 64 filters, 3x3 kernel, non-stride
 - 5th layer of CNN: 64 filters, 3x3 kernel, non-stride
 - Flatten
+- Dropout(dropout 40% of connection)
 - 1st fully connected layer: 100 neurons
 - 2nd fully connected layer: 50 neurons
 - 3rd fully connected layer: 10 neurons
