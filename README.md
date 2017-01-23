@@ -101,7 +101,7 @@ Fig.8: Flipped image and Steering angle
 
 
 ## Result
-The result of this project is from [here](https://www.youtube.com/watch?v=HRvNs1jUHmI&feature=youtu.be)
+The result of this project is available from [here](https://www.youtube.com/watch?v=HRvNs1jUHmI&feature=youtu.be)
 [![Result](images/result.png)](https://www.youtube.com/watch?v=HRvNs1jUHmI&feature=youtu.be)
 
 ## Reflection
