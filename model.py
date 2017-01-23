@@ -102,7 +102,7 @@ def image_generator(driving_log):
 
 
 
-def batch_generator(driving_log,  batch_size=32, *args, **kwargs):
+def batch_generator(driving_log, batch_size=32, *args, **kwargs):
     num_rows = len(driving_log.index)
     train_images = np.zeros((batch_size, 3, 66, 200))
     train_steering = np.zeros(batch_size)
@@ -151,8 +151,7 @@ model.add(Convolution2D(48, 5, 5, subsample=(2,2), activation='relu', name='Conv
 model.add(Convolution2D(64, 3, 3, activation='relu', name='Conv4'))
 model.add(Convolution2D(64, 3, 3, activation='relu', name='Conv5'))
 model.add(Flatten())
-#model.add(Dense(1164, activation='relu', name='FC1'))
-#model.add(Dropout(0.4))
+model.add(Dropout(0.4))
 model.add(Dense(100, activation='relu', name='FC1'))
 #model.add(Dropout(0.5))
 model.add(Dense(50, activation='relu', name='FC2'))
