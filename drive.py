@@ -65,10 +65,10 @@ def telemetry(sid, data):
         throttle = 1.0
     elif (steering_angle<-0.15)|(steering_angle>0.15):
         throttle =0.1
-    #elif speed>30:
-    #    throttle=0.2
+    elif speed>30:
+        throttle=0.2
     else:
-        throttle=0.25
+        throttle=0.22
 
     # else don't change from previous
     print(steering_angle, throttle)
