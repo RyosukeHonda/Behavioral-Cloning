@@ -99,6 +99,11 @@ Since the training set only one right corner in the course(truck 1), the car wil
 
 Fig.8: Flipped image and Steering angle
 
+
+## Result
+The result of this project is from [here](https://www.youtube.com/watch?v=HRvNs1jUHmI&feature=youtu.be)
+[![Result](images/result.png)](https://www.youtube.com/watch?v=HRvNs1jUHmI&feature=youtu.be)
+
 ## Reflection
 This was one of the most challenging projects I've ever did concerning deep learning.Typically in deep learning, high number of epochs will tend to get low validation loss (potential falling into overfitting though). This was true to this project and I got low validation loss after long time of training. However, low validation loss doesn't always good in this project. I tried the lowest validation loss model,but the car easily drove off the truck. On the other hand, shallow epochs(such as 2 or 3 in this project) resulted in the best result. I got better result when generating images by adding brightness and flip images.
 
