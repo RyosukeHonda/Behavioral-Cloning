@@ -76,11 +76,14 @@ Fig.6: Training and Validation steering angle distribution after cutting off sma
 
 
 
-I trained the model with [Keras](https://keras.io/) fit_generator. Parameters for training are below.
+I trained the model with [Keras](https://keras.io/) fit_generator.
+Keras fit_generator generates infinite number of images so I have to choose the appropriate number for hyper-parameters.These hyper-parameters are decided by empirically after many times of trial. I've found that the validation loss doesn't decrease sharply even if I chose large number of epochs(such as 10). What's more, the low value of validation loss doesn't always mean that the clone driver drives well. Therefore I chose only 2 epochs for training the model.Parameters for training are below.
+
 - Batch size:32
 - Number of epochs:2
 - Samples per epoch:28000
 - Number of validation samples:2800
+
 
 ## Strategies(Data Augmentation)
 Since the number of the training data set is limited, I also used left and right side of images as mentioned above.
