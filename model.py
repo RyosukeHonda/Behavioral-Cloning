@@ -94,7 +94,7 @@ def batch_generator(driving_log, batch_size=32, *args, **kwargs):
     train_images = np.zeros((batch_size, 3, 66, 200))
     train_steering = np.zeros(batch_size)
     ctr = None
-    while 1:
+    while True:
         for j in range(batch_size):
             # Reset generator if over bounds
             if ctr is None or ctr >= num_rows:
