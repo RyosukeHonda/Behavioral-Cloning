@@ -17,8 +17,6 @@ import os
 import matplotlib.pyplot as plt
 from numpy.random import randint
 
-
-
 def roi(img):
     #img =img[55:140,30:290]
     img =img[40:img.shape[0]-25,:]
@@ -41,14 +39,10 @@ def transpose_image(img,steering):
     img = cv2.flip(img,1)
     return img,-1.0*steering
 
-
 def image_generator(driving_log):
     driving_log = driving_log.sample(frac=1).reset_index(drop=True)
 
     for index, row in driving_log.iterrows():
-
-
-
         #Select Left,Center,Right image
         sel_lcr = np.random.randint(3)
 
@@ -68,16 +62,12 @@ def image_generator(driving_log):
             img = load_img('IMG/'+fname)
             img =np.array(img)
 
-
         #Crop and Resize the image
         img = roi(img)
-
         #Normalize the image
         img = normalization(img)
-
         #Add Random Brightness
         aug_bright = np.random.randint(3)
-
         if aug_bright ==0:
             img = augment_brightness(img)
         else:
@@ -94,13 +84,10 @@ def image_generator(driving_log):
 
         else:
             pass
-
         #Reshape the image
         img = np.reshape(img,(3,66,200))
 
         yield img, steering
-
-
 
 def batch_generator(driving_log, batch_size=32, *args, **kwargs):
     num_rows = len(driving_log.index)
@@ -116,7 +103,6 @@ def batch_generator(driving_log, batch_size=32, *args, **kwargs):
             train_images[j], train_steering[j] = next(images)
             ctr += 1
         yield train_images, train_steering
-
 
 driving_log = pd.read_csv("driving_log.csv").reset_index()
 print("Number of Original Data",len(driving_log))
@@ -160,18 +146,15 @@ model.add(Dense(10, activation='relu', name='FC3'))
 #model.add(Dropout(0.5))
 model.add(Dense(1, name='output'))
 model.summary()
-
 opt = Adam(lr=0.0001)
+
 model.compile(optimizer=opt, loss='mse', metrics=[])
-
-
 model_json = model.to_json()
 model_name = 'model'
 h = model.fit_generator(train_data, validation_data = val_data,
                             samples_per_epoch = 28000,#28000
                             nb_val_samples = 2800,
                             nb_epoch=2, verbose=1)
-
 
 with open(model_name+'.json', "w") as json_file:
     json_file.write(model_json)
