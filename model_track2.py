@@ -17,7 +17,6 @@ import cv2
 import numpy as np
 import pandas as pd
 import os
-
 from numpy.random import randint
 
 
@@ -123,7 +122,7 @@ print("Number of Original Data",len(driving_log))
 
 #Cut off 75% of low steering angle
 #num_drops = int(len(driving_log[np.abs(driving_log["steering"])<=0.01])*0.75)
-num_drops = int(len(driving_log[np.abs(driving_log["steering"])<=0.01])*0.6)
+num_drops = int(len(driving_log[np.abs(driving_log["steering"])<=0.01])*0.3) # 0.3 is best
 drop_lows = driving_log[driving_log["steering"]==0]["index"].values[0:num_drops]
 
 #Shuffle the data
@@ -157,10 +156,10 @@ model.add(ELU())
 model.add(Convolution2D(64, 3, 3, name='Conv5'))
 model.add(ELU())
 model.add(Flatten())
-model.add(Dropout(0.5))
+model.add(Dropout(0.2))
 model.add(Dense(100, name='FC1'))
 model.add(ELU())
-model.add(Dropout(0.5))
+model.add(Dropout(0.3))
 model.add(Dense(50, name='FC2'))
 model.add(ELU())
 #model.add(Dropout(0.5))
@@ -176,17 +175,16 @@ model.compile(optimizer=opt, loss='mse', metrics=[])
 
 
 model_json = model.to_json()
-model_name = 'model_track2_no7'
+model_name = 'model_track2_no13'
 h = model.fit_generator(train_data, validation_data = val_data,
-                            samples_per_epoch = 12800,#28000
+                            samples_per_epoch = 56000,#28000
                             nb_val_samples = 2800,
-                            nb_epoch=3, verbose=1)
+                            nb_epoch=2, verbose=1)
 
 
 with open(model_name+'.json', "w") as json_file:
     json_file.write(model_json)
 
 model.save_weights(model_name+'.h5')
-
 
 
