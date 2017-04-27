@@ -90,18 +90,22 @@ def telemetry(sid, data):
     image_array = np.reshape(image_array,(3,66,200))
     transformed_image_array = image_array[None, :, :, :]
 
-    steering_angle = float(model.predict(transformed_image_array, batch_size=1))
+    steering_angle = float(model.predict(transformed_image_array, batch_size=1)) *1.5
 
-    controller = PIDController(0.1, 0.005,3.0)
-    if abs(steering_angle)<0.6:
-        set_speed = 18
-    else:
+    controller = PIDController(0.08,0.00012,0.05)
+
+    set_speed = 18
+
+
+    if abs(steering_angle)>0.45:
+        set_speed = 15
+    elif abs(steering_angle)>0.8:
         set_speed =5
+
     controller.set_desired(set_speed)
 
-    throttle = controller.update(float(speed))
 
-    # else don't change from previous
+    throttle = controller.update(float(speed))
     print(steering_angle, throttle)
     send_control(steering_angle, throttle)
 
